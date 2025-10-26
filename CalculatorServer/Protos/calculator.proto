@@ -1,0 +1,36 @@
+// Protocol Buffers (proto) file, which defines how the client and server communicate in your gRPC-based distributed calculator system.
+
+
+syntax = "proto3";
+
+option csharp_namespace = "CalculatorServer";
+
+package calculator;
+
+// The calculator service definition
+service Calculator {
+  rpc Square (CalculationRequest) returns (CalculationResponse);
+  rpc Cube (CalculationRequest) returns (CalculationResponse);
+  rpc SlowMultiply (MultiplyRequest) returns (CalculationResponse);
+}
+
+// Request message for single number operations
+message CalculationRequest {
+  double number = 1;
+  map<string, int32> vector_clock = 2;
+}
+
+// Request message for multiply operation
+message MultiplyRequest {
+  double number1 = 1;
+  double number2 = 2;
+  map<string, int32> vector_clock = 3;
+}
+
+// Response message
+message CalculationResponse {
+  double result = 1;
+  bool is_success = 2;
+  string error_message = 3;
+  map<string, int32> vector_clock = 4;
+}
